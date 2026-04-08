@@ -1,266 +1,48 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Niaye-Niaye Transport — Réservation officielle</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --nn-green: #1a5e20;
-    --nn-green-light: #2e7d32;
-    --nn-white: #FFFFFF;
-    --nn-bg: #f4f7f4;
-    --text-dark: #1b1b1b;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--nn-bg); color: var(--text-dark); font-family: 'DM Sans', sans-serif; padding-top: 80px; }
-
-  /* NAV & LOGO */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: center;
-    padding: 10px; background: var(--nn-white);
-    border-bottom: 3px solid var(--nn-green);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  }
-  .logo-img { height: 60px; width: auto; }
-
-  /* HERO */
-  .hero {
-    padding: 60px 20px; text-align: center;
-    background: linear-gradient(rgba(26, 94, 32, 0.85), rgba(26, 94, 32, 0.85)), url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1000');
-    background-size: cover; background-position: center; color: white;
-  }
-
-  .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
-  .trips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-  
-  .trip-card {
-    background: white; border-radius: 15px; padding: 25px;
-    border-top: 6px solid var(--nn-green);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    text-align: center;
-  }
-  .trip-title { color: var(--nn-green); font-weight: 800; font-size: 1.3rem; margin-bottom: 10px; }
-  .trip-price { font-size: 1.5rem; font-weight: 700; margin: 15px 0; color: #333; }
-
-  .btn-reserver {
-    width: 100%; background: var(--nn-green); color: white; border: none;
-    padding: 14px; border-radius: 10px; font-weight: 700; cursor: pointer;
-    font-size: 1rem; transition: 0.3s;
-  }
-  .btn-reserver:hover { background: var(--nn-green-light); transform: scale(1.02); }
-
-  /* MODAL */
-  .modal-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.8);
-    display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px;
-  }
-  .modal-overlay.active { display: flex; }
-  .modal { 
-    background: white; padding: 25px; border-radius: 20px; 
-    width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto;
-  }
-  
-  label { display: block; margin-top: 15px; font-weight: 700; font-size: 0.85rem; color: var(--nn-green); }
-  input, select {
-    width: 100%; padding: 12px; margin-top: 5px;
-    border: 1.5px solid #eee; border-radius: 10px; font-size: 1rem; outline: none;
-  }
-  input:focus, select:focus { border-color: var(--nn-green); }
-
-  .total-box {
-    background: #f0fdf4; border: 1px dashed var(--nn-green); padding: 15px; 
-    border-radius: 12px; text-align: center; font-weight: 800; 
-    color: var(--nn-green); margin: 20px 0; font-size: 1.2rem;
-  }
-
-  footer { text-align: center; font-weight: bold; padding: 40px; color: #888; font-size: 0.85rem; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Niaye-Niaye Transport — Maintenance</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f7f4;
+            color: #1a5e20;
+            font-family: 'DM Sans', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 500px;
+        }
+        img { height: 80px; margin-bottom: 20px; }
+        h1 { font-size: 1.8rem; margin-bottom: 10px; }
+        p { color: #666; font-size: 1.1rem; }
+        .contact {
+            margin-top: 20px;
+            font-weight: bold;
+            display: block;
+            text-decoration: none;
+            color: #1a5e20;
+        }
+    </style>
 </head>
 <body>
-
-<nav>
-  <img src="logo.jpg" alt="Logo Niaye-Niaye Transport" class="logo-img">
-</nav>
-
-<div class="hero">
-  <h1>Votre voyage commence ici</h1>
-  <p>Service de transport fiable entre Mboro, Dakar et Saint-Louis</p>
-</div>
-
-<div class="container">
-  <div class="trips-grid" id="tripsGrid"></div>
-</div>
-
-<div class="modal-overlay" id="modalOverlay">
-  <div class="modal">
-    <h2 id="modalTitle" style="color:var(--nn-green); text-align:center;">Réserver mon siège</h2>
-    
-    <label>Prénom et Nom</label>
-    <input type="text" id="fname" placeholder="Ex: Moussa Ndiaye">
-    
-    <label>Téléphone</label>
-    <input type="tel" id="fphone" placeholder="7x xxx xx xx">
-
-    <label>📍 Choisissez votre point de départ (Lieu exact)</label>
-    <select id="fpoint"></select>
-
-    <div style="display: flex; gap: 10px;">
-        <div style="flex: 1;">
-            <label>Nombre de places</label>
-            <select id="fplaces" onchange="updateTotal()">
-                <option value="1">1 place</option>
-                <option value="2">2 places</option>
-                <option value="3">3 places</option>
-            </select>
-        </div>
-        <div style="flex: 1;">
-            <label>Paiement</label>
-            <select id="fpay">
-                <option value="Wave">Wave</option>
-                <option value="Orange Money">Orange Money</option>
-            </select>
-        </div>
+    <div class="container">
+        <img src="logo.jpg" alt="Logo Niaye-Niaye Transport">
+        <h1>Site momentanément indisponible</h1>
+        <p>Nous effectuons une mise à jour de nos services. Les réservations reprendront très prochainement.</p>
+        <p>Merci de votre fidélité !</p>
+        <a href="https://wa.me/221704829355" class="contact">Nous contacter sur WhatsApp</a>
     </div>
-
-    <div class="total-box" id="totalAmount">Total : 0 FCFA</div>
-    
-    <button class="btn-reserver" onclick="sendToWhatsApp()">✅ Confirmer sur WhatsApp</button>
-    <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#999; margin-top:15px; cursor:pointer;">Retour</button>
-  </div>
-</div>
-
-<footer>
-  <p><b>Niaye-Niaye Transport</b> — L'exigence d'un voyage réussi.</p>
-  <p>Contact : 70 482 93 55 / 76 785 96 01 / 76 691 38 48 / 76 422 81 56 / 76 741 40 16</p>
-</footer>
-
-<script>
-const trajets = [
-  { 
-    id: 1, 
-    from: "Mboro", to: "Saint-Louis", 
-    prix: 7500,
-    points: [
-      "07h00 : Ngaye-Ngaye I", "07h15 : Garage Routier", "07h30 : Mosquée HLM",
-      "07h40 : Station Total", "07h50 : Arrêt Car Diamaguène", "08h00 : Lycée de Mboro",
-      "08h15 : Croisement", "08h30 : Darou Carrefour"
-    ]
-  },
-  { 
-    id: 2, 
-    from: "Dakar-Thies", to: "Saint-Louis", 
-    prix: 3500,
-    points: [
-      "05h00 : Dakar - Ecole Normale", "05h40 : Bountou Pikine - Station TOTAL",
-      "06h10 : Fass mbao - Arrêt ICS", "06h20 : Keur Mbaye fall (Djouma Dji)",
-      "06h40 : Edk Rufisque (Sococim)", "07h00 : Bargny-Edk", "07h10 : Diamniadio (Hôpital)",
-      "07h20 : Sébikhotane (Niari Poto)", "07h30 : Km50 (Station Clean Oil)",
-      "07h40 : Pout (Clean Oil)", "08h00 : Mairie Thiès", "08h30 : EDK Tivaouane",
-      "08h50 : Pire Garage", "09h00 : Ngaye Station Star", "09h30 : Ndande Station",
-      "09h50 : Keberme Station", "10h30 : Louga Station EDK"
-    ]
-  },
-  { 
-    id: 3, 
-    from: "Dakar-Thiès (Soir 9 avril)", to: "Saint-Louis", 
-    prix: 7500,
-    points: [
-      "15h00 : Bountou Pikine - Station TOTAL",
-      "15h10 : Fass mbao - Arrêt ICS",
-      "15h20 : Keur Mbaye fall (Djouma Dji)",
-      "15h40 : Edk Rufisque (Sococim)",
-      "16h00 : Rond-point Sedima",
-      "16h15 : Bargny-Edk",
-      "16h30 : Diamniadio (Hôpital)",
-      "16h45 : Sébikhotane (Niari Poto)",
-      "17h00 : Km50 (Station Clean Oil)",
-      "17h20 : Pout (Clean Oil)",
-      "17h40 : Mairie Thiès",
-      "18h00 : EDK Tivaouane",
-      "18h10 : Pire garage",
-      "18h30 : Ngaye station star",
-      "18h50 : Ndande station",
-      "19h00 : Kébémer station",
-      "19h30 : Louga Station EDK"
-    ]
-  }
-];
-
-let selectedTrip = null;
-
-// On génère l'affichage des trajets
-const grid = document.getElementById('tripsGrid');
-
-grid.innerHTML = trajets.map(t => {
-  // --- CONDITION DE BLOCAGE ---
-  // On définit si le trajet doit être bloqué (ici l'id 2)
-  const estBloque = (t.id === 2); 
-
-  return `
-    <div class="trip-card" style="${estBloque ? 'opacity: 0.5; cursor: not-allowed; pointer-events: none;' : ''}">
-      <div class="trip-title">${t.from} ➔ ${t.to}</div>
-      <p style="color:#666; font-size:0.9rem;">${estBloque ? '❌ Momentanément indisponible' : 'Points de ramassage multiples'}</p>
-      <div class="trip-price">${t.prix.toLocaleString()} FCFA</div>
-      
-      <button class="btn-reserver" 
-        ${estBloque ? 'disabled' : ''} 
-        onclick="${estBloque ? '' : `openModal(${t.id})`}"
-        style="${estBloque ? 'background: #999; cursor: not-allowed;' : ''}">
-        ${estBloque ? 'Indisponible' : 'Choisir ce trajet'}
-      </button>
-    </div>
-  `;
-}).join('');
-
-function openModal(id) {
-  selectedTrip = trajets.find(t => t.id === id);
-  document.getElementById('modalTitle').innerText = selectedTrip.from + " ➔ " + selectedTrip.to;
-  
-  // Remplissage dynamique des points de départ
-  const selectPoint = document.getElementById('fpoint');
-  selectPoint.innerHTML = selectedTrip.points.map(p => `<option value="${p}">${p}</option>`).join('');
-  
-  updateTotal();
-  document.getElementById('modalOverlay').classList.add('active');
-}
-
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('active');
-}
-
-function updateTotal() {
-  const p = document.getElementById('fplaces').value;
-  document.getElementById('totalAmount').innerText = "Total : " + (selectedTrip.prix * p).toLocaleString() + " FCFA";
-}
-
-function sendToWhatsApp() {
-  const nom = document.getElementById('fname').value;
-  const tel = document.getElementById('fphone').value;
-  const point = document.getElementById('fpoint').value;
-  const places = document.getElementById('fplaces').value;
-  const pay = document.getElementById('fpay').value;
-
-  if(!nom || !tel) return alert("Veuillez entrer votre nom et votre numéro de téléphone.");
-
-  const numWhatsApp = "221774600290"; // Votre numéro
-  const message = `*RÉSERVATION NIAYE-NIAYE TRANSPORT*%0A` +
-                  `------------------------------%0A` +
-                  `👤 Client : *${nom}*%0A` +
-                  `📞 Tél : *${tel}*%0A` +
-                  `📍 Trajet : *${selectedTrip.from} -> ${selectedTrip.to}*%0A` +
-                  `🚏 Départ de : *${point}*%0A` +
-                  `💺 Places : *${places}*%0A` +
-                  `💳 Paiement : *${pay}*%0A` +
-                  `💰 Total : *${(selectedTrip.prix * places)} FCFA*%0A` +
-                  `------------------------------%0A` +
-                  `_Merci de confirmer ma place._`;
-
-  window.open(`https://wa.me/${numWhatsApp}?text=${message}`, '_blank');
-}
-</script>
 </body>
 </html>
