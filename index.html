@@ -163,20 +163,59 @@ const trajets = [
       "08h50 : Pire Garage", "09h00 : Ngaye Station Star", "09h30 : Ndande Station",
       "09h50 : Keberme Station", "10h30 : Louga Station EDK"
     ]
+  },
+  { 
+    id: 3, 
+    from: "Dakar-Thiès (Soir)", to: "Saint-Louis", 
+    prix: 7500,
+    points: [
+      "Le 09 Avril Soir",
+      "15h00 : Bountou Pikine - Station TOTAL",
+      "15h10 : Fass mbao - Arrêt ICS",
+      "15h20 : Keur Mbaye fall (Djouma Dji)",
+      "15h40 : Edk Rufisque (Sococim)",
+      "16h00 : Rond-point Sedima",
+      "16h15 : Bargny-Edk",
+      "16h30 : Diamniadio (Hôpital)",
+      "16h45 : Sébikhotane (Niari Poto)",
+      "17h00 : Km50 (Station Clean Oil)",
+      "17h20 : Pout (Clean Oil)",
+      "17h40 : Mairie Thiès",
+      "18h00 : EDK Tivaouane",
+      "18h10 : Pire garage",
+      "18h30 : Ngaye station star",
+      "18h50 : Ndande station",
+      "19h00 : Kébémer station",
+      "19h30 : Louga Station EDK"
+    ]
   }
 ];
 
 let selectedTrip = null;
 
+// On génère l'affichage des trajets
 const grid = document.getElementById('tripsGrid');
-grid.innerHTML = trajets.map(t => `
-  <div class="trip-card">
-    <div class="trip-title">${t.from} ➔ ${t.to}</div>
-    <p style="color:#666; font-size:0.9rem;">Points de ramassage multiples</p>
-    <div class="trip-price">${t.prix.toLocaleString()} FCFA</div>
-    <button class="btn-reserver" onclick="openModal(${t.id})">Choisir ce trajet</button>
-  </div>
-`).join('');
+
+grid.innerHTML = trajets.map(t => {
+  // --- CONDITION DE BLOCAGE ---
+  // On définit si le trajet doit être bloqué (ici l'id 2)
+  const estBloque = (t.id === 2); 
+
+  return `
+    <div class="trip-card" style="${estBloque ? 'opacity: 0.5; cursor: not-allowed; pointer-events: none;' : ''}">
+      <div class="trip-title">${t.from} ➔ ${t.to}</div>
+      <p style="color:#666; font-size:0.9rem;">${estBloque ? '❌ Momentanément indisponible' : 'Points de ramassage multiples'}</p>
+      <div class="trip-price">${t.prix.toLocaleString()} FCFA</div>
+      
+      <button class="btn-reserver" 
+        ${estBloque ? 'disabled' : ''} 
+        onclick="${estBloque ? '' : `openModal(${t.id})`}"
+        style="${estBloque ? 'background: #999; cursor: not-allowed;' : ''}">
+        ${estBloque ? 'Indisponible' : 'Choisir ce trajet'}
+      </button>
+    </div>
+  `;
+}).join('');
 
 function openModal(id) {
   selectedTrip = trajets.find(t => t.id === id);
