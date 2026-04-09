@@ -166,14 +166,14 @@ const trajets = [
   },
   { 
     id: 3, 
-    from: "Dakar-Thiès (Soir 9 avril)", to: "Saint-Louis", 
+    from: "Dakar-Thiès (Soir 10 avril)", to: "Saint-Louis", 
     prix: 7500,
     points: [
       "15h00 : Bountou Pikine - Station TOTAL",
       "15h10 : Fass mbao - Arrêt ICS",
       "15h20 : Keur Mbaye fall (Djouma Dji)",
       "15h40 : Edk Rufisque (Sococim)",
-      "16h00 : Rond-point Sedima",
+      "16h00 : Station Eydon Sedima",
       "16h15 : Bargny-Edk",
       "16h30 : Diamniadio (Hôpital)",
       "16h45 : Sébikhotane (Niari Poto)",
@@ -198,9 +198,8 @@ const grid = document.getElementById('tripsGrid');
 grid.innerHTML = trajets.map(t => {
   // --- CONDITION DE BLOCAGE ---
   // On définit si le trajet doit être bloqué (ici l'id 2)
-  const estBloque = (t.id === 2 || t.id === 3);
-
-  return `
+  const estBloque = (t.id === 2 );
+    return `
     <div class="trip-card" style="${estBloque ? 'opacity: 0.5; cursor: not-allowed; pointer-events: none;' : ''}">
       <div class="trip-title">${t.from} ➔ ${t.to}</div>
       <p style="color:#666; font-size:0.9rem;">${estBloque ? '❌ Momentanément indisponible' : 'Points de ramassage multiples'}</p>
