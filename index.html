@@ -198,7 +198,7 @@ const grid = document.getElementById('tripsGrid');
 grid.innerHTML = trajets.map(t => {
   // --- CONDITION DE BLOCAGE ---
   // On définit si le trajet doit être bloqué (ici l'id 2)
-  const estBloque = (t.id === 2); 
+  const estBloque = (t.id === 2 || t.id === 3);
 
   return `
     <div class="trip-card" style="${estBloque ? 'opacity: 0.5; cursor: not-allowed; pointer-events: none;' : ''}">
