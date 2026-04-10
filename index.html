@@ -143,7 +143,7 @@ const trajets = [
   { 
     id: 1, 
     from: "Mboro", to: "Saint-Louis", 
-    prix: 7500,
+    prix: 5500,
     points: [
       "07h00 : Ngaye-Ngaye I", "07h15 : Garage Routier", "07h30 : Mosquée HLM",
       "07h40 : Station Total", "07h50 : Arrêt Car Diamaguène", "08h00 : Lycée de Mboro",
@@ -152,22 +152,32 @@ const trajets = [
   },
   { 
     id: 2, 
-    from: "Dakar-Thies", to: "Saint-Louis", 
-    prix: 3500,
+    from: "Dakar-Thies (matin 11 avril)", to: "Saint-Louis", 
+    prix: 3700,
     points: [
-      "05h00 : Dakar - Ecole Normale", "05h40 : Bountou Pikine - Station TOTAL",
-      "06h10 : Fass mbao - Arrêt ICS", "06h20 : Keur Mbaye fall (Djouma Dji)",
-      "06h40 : Edk Rufisque (Sococim)", "07h00 : Bargny-Edk", "07h10 : Diamniadio (Hôpital)",
-      "07h20 : Sébikhotane (Niari Poto)", "07h30 : Km50 (Station Clean Oil)",
-      "07h40 : Pout (Clean Oil)", "08h00 : Mairie Thiès", "08h30 : EDK Tivaouane",
-      "08h50 : Pire Garage", "09h00 : Ngaye Station Star", "09h30 : Ndande Station",
-      "09h50 : Keberme Station", "10h30 : Louga Station EDK"
+      "05h00 : Bountou Pikine - Station TOTAL",
+      "05h10 : Fass mbao - Arrêt ICS",
+      "05h20 : Keur Mbaye fall (Djouma Dji)",
+      "05h40 : Edk Rufisque (Sococim)",
+      //"14h00 : Station Eydon Sedima",
+      "06h00 : Bargny-Edk",
+      "06h15 : Diamniadio ",
+      "06h35 : Sébikhotane (Niari Poto)",
+      //"15h00 : Km50 (Station Clean Oil)",
+      "07h00 : Pout (Ciel Oil)",
+      "07h15 : Mairie Thiès",
+      "07h40 : EDK Tivaouane",
+      //"16h10 : Pire garage",
+      "08h00 : Ngaye station star",
+      //"16h50 : Ndande station",
+      //"17h00 : Kébémer station",
+      //"17h30 : Louga Station EDK"
     ]
   },
   { 
     id: 3, 
     from: "Dakar-Thiès (Soir 10 avril)", to: "Saint-Louis", 
-    prix: 3500,
+    prix: 3700,
     points: [
       "13h00 : Bountou Pikine - Station TOTAL",
       "13h10 : Fass mbao - Arrêt ICS",
@@ -198,7 +208,7 @@ const grid = document.getElementById('tripsGrid');
 grid.innerHTML = trajets.map(t => {
   // --- CONDITION DE BLOCAGE ---
   // On définit si le trajet doit être bloqué (ici l'id 2)
-  const estBloque = (t.id === 2 );
+  const estBloque = false; //(t.id === 2 );
     return `
     <div class="trip-card" style="${estBloque ? 'opacity: 0.5; cursor: not-allowed; pointer-events: none;' : ''}">
       <div class="trip-title">${t.from} ➔ ${t.to}</div>
