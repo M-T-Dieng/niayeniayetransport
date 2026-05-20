@@ -91,7 +91,7 @@
 
 <div class="hero">
   <h1>Spécial Retour Tabaski</h1>
-  <p>Réservez votre trajet depuis Saint-Louis vers Dakar ou Mboro</p>
+  <p>Réservez votre trajet depuis Saint-Louis vers Mboro ou Dakar</p>
 </div>
 
 <div class="container">
@@ -101,13 +101,23 @@
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <h2 id="modalTitle" style="color:var(--nn-green); text-align:center;">Réserver mon siège</h2>
-    <p id="modalSub" style="text-align:center; font-size:0.9rem; color:#666;"></p>
     
     <label>Prénom et Nom</label>
     <input type="text" id="fname" placeholder="Ex: Moussa Ndiaye">
     
     <label>Téléphone</label>
     <input type="tel" id="fphone" placeholder="7x xxx xx xx">
+
+    <div id="dateSelectionBlock">
+      <label>📅 Choisissez votre date de départ</label>
+      <select id="fdate">
+        <option value="21 Mai 2026">21 Mai 2026</option>
+        <option value="22 Mai 2026">22 Mai 2026</option>
+        <option value="23 Mai 2026">23 Mai 2026</option>
+        <option value="24 Mai 2026">24 Mai 2026</option>
+        <option value="25 Mai 2026">25 Mai 2026</option>
+      </select>
+    </div>
 
     <label>📍 Point de ramassage</label>
     <select id="fpoint"></select>
@@ -143,8 +153,15 @@
 </footer>
 
 <script>
-// Points communs pour Saint-Louis -> Dakar (UGB)
-const pointsUGB = [
+// Points de départ (Sans les heures pour Mboro, avec heures pour Dakar)
+const pointsMboro = [
+  "UGB - Village P", "UGB - Village M", "UGB - Village Q", "UGB - Village O", 
+  "UGB - Village N", "UGB - Village K", "UGB - Village I", "UGB - Village H", 
+  "UGB - Village L", "UGB - Village J", "Porte Ceamitic", "Station Elton Boudiouck", 
+  "Ngallelle", "Croisement Bango", "Rond Point khor (Station Petrosen)", "Station Shell (Gare routière)"
+];
+
+const pointsDakarUGB = [
   "04:15 : UGB- Village P", "04:30 : UGB- Village M", "04:30 : UGB- Village Q",
   "04:40 : UGB- Village O", "04:40 : UGB- Village N", "04:45 : UGB- Village K/I/H/L/J",
   "04:55 : Porte Ceamitic", "05:00 : Station Elton Boudiouck", "05:00 : Ngallelle",
@@ -152,23 +169,25 @@ const pointsUGB = [
 ];
 
 const trajets = [
-  // Trajet MBORO
+  // Trajet MBORO (Une seule carte avec sélection de date dans le formulaire)
   { 
     id: 'mboro', 
     from: "Saint-Louis", to: "Mboro", 
-    date: "Retour Tabaski", 
-    heure: "Formulaire de réservation", 
+    date: "21 au 25 Mai", 
+    heure: "Date au choix dans le formulaire", 
     prix: 5000,
-    points: ["Gare Routière", "UGB", "Lieu à convenir"]
+    points: pointsMboro,
+    type: "choix-date"
   },
-  // Génération des trajets DAKAR du 19 au 25 Mai
+  // Génération des trajets DAKAR (Cartes séparées par jour)
   ...[19, 20, 21, 22, 23, 24, 25].map(j => ({
     id: `dakar-${j}`,
     from: "Saint-Louis", to: "Dakar",
     date: `${j} Mai 2026`,
     heure: "Départ matinal (04:15)",
     prix: 3500,
-    points: pointsUGB
+    points: pointsDakarUGB,
+    type: "date-fixe"
   }))
 ];
 
@@ -188,7 +207,13 @@ grid.innerHTML = trajets.map(t => `
 function openModal(id) {
   selectedTrip = trajets.find(t => t.id === id);
   document.getElementById('modalTitle').innerText = selectedTrip.from + " ➔ " + selectedTrip.to;
-  document.getElementById('modalSub').innerText = "Date : " + selectedTrip.date;
+  
+  const dateBlock = document.getElementById('dateSelectionBlock');
+  if (selectedTrip.type === "choix-date") {
+    dateBlock.style.display = "block"; // Affiche le choix de la date pour Mboro
+  } else {
+    dateBlock.style.display = "none";  // Cache pour Dakar car la date est déjà sur la carte
+  }
   
   const selectPoint = document.getElementById('fpoint');
   selectPoint.innerHTML = selectedTrip.points.map(p => `<option value="${p}">${p}</option>`).join('');
@@ -212,15 +237,18 @@ function sendToWhatsApp() {
   const point = document.getElementById('fpoint').value;
   const places = document.getElementById('fplaces').value;
   const pay = document.getElementById('fpay').value;
+  
+  // Déterminer la date choisie ou fixe
+  const dateVoyage = selectedTrip.type === "choix-date" ? document.getElementById('fdate').value : selectedTrip.date;
 
   if(!nom || !tel) return alert("Veuillez remplir votre nom et téléphone.");
 
-  const numWhatsApp = "221774600290"; 
+  const numWhatsApp = "221704829355"; 
   const message = `*RÉSERVATION NIAYE-NIAYE TRANSPORT*%0A` +
                   `------------------------------%0A` +
                   `👤 *Client :* ${nom}%0A` +
                   `📞 *Tél :* ${tel}%0A` +
-                  `📅 *Date :* ${selectedTrip.date}%0A` +
+                  `📅 *Date :* ${dateVoyage}%0A` +
                   `📍 *Trajet :* ${selectedTrip.from} -> ${selectedTrip.to}%0A` +
                   `🚏 *Ramassage :* ${point}%0A` +
                   `💺 *Places :* ${places}%0A` +
