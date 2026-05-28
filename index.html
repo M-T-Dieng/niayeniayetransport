@@ -3,260 +3,611 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Niaye-Niaye Transport — Retour Tabaski</title>
+<title>Niaye-Niaye Transport — Retour UGB</title>
+
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
 <style>
-  :root {
-    --nn-green: #1a5e20;
-    --nn-green-light: #2e7d32;
-    --nn-white: #FFFFFF;
-    --nn-bg: #f4f7f4;
-    --text-dark: #1b1b1b;
+
+:root{
+  --nn-green:#1a5e20;
+  --nn-green-light:#2e7d32;
+  --nn-white:#ffffff;
+  --nn-bg:#f4f7f4;
+  --text-dark:#1b1b1b;
+}
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--nn-bg);
+  color:var(--text-dark);
+  padding-top:80px;
+}
+
+/* NAVBAR */
+
+nav{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:100;
+  background:white;
+  padding:10px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  border-bottom:3px solid var(--nn-green);
+  box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+.logo-img{
+  height:60px;
+  width:auto;
+}
+
+/* HERO */
+
+.hero{
+  padding:50px 20px;
+  text-align:center;
+  color:white;
+  background:
+  linear-gradient(rgba(26,94,32,0.85),rgba(26,94,32,0.85)),
+  url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1000');
+  background-size:cover;
+  background-position:center;
+}
+
+.hero h1{
+  font-size:clamp(2rem,5vw,3rem);
+  margin-bottom:10px;
+}
+
+/* CONTAINER */
+
+.container{
+  max-width:1100px;
+  margin:30px auto;
+  padding:0 20px;
+}
+
+.trips-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:20px;
+}
+
+/* CARD */
+
+.trip-card{
+  background:white;
+  padding:20px;
+  border-radius:18px;
+  border-top:6px solid var(--nn-green);
+  box-shadow:0 4px 15px rgba(0,0,0,0.06);
+  text-align:center;
+}
+
+.date-badge{
+  background:var(--nn-green);
+  color:white;
+  display:inline-block;
+  padding:6px 15px;
+  border-radius:20px;
+  font-size:0.85rem;
+  font-weight:bold;
+  margin-bottom:10px;
+}
+
+.trip-title{
+  color:var(--nn-green);
+  font-size:1.3rem;
+  font-weight:800;
+  margin-bottom:10px;
+}
+
+.trip-price{
+  font-size:1.5rem;
+  font-weight:700;
+  margin:15px 0;
+}
+
+/* BUTTON */
+
+.btn-reserver{
+  width:100%;
+  background:var(--nn-green);
+  color:white;
+  border:none;
+  padding:13px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  transition:0.3s;
+}
+
+.btn-reserver:hover{
+  background:var(--nn-green-light);
+  transform:scale(1.02);
+}
+
+/* MODAL */
+
+.modal-overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.8);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:1000;
+  padding:20px;
+}
+
+.modal-overlay.active{
+  display:flex;
+}
+
+.modal{
+  background:white;
+  width:100%;
+  max-width:500px;
+  padding:25px;
+  border-radius:20px;
+  max-height:90vh;
+  overflow-y:auto;
+  animation:pop .25s ease;
+}
+
+@keyframes pop{
+  from{
+    transform:scale(0.9);
+    opacity:0;
+  }
+  to{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+label{
+  display:block;
+  margin-top:15px;
+  font-size:0.9rem;
+  font-weight:700;
+  color:var(--nn-green);
+}
+
+input,select{
+  width:100%;
+  padding:12px;
+  margin-top:5px;
+  border-radius:10px;
+  border:1.5px solid #e6e6e6;
+  outline:none;
+}
+
+.total-box{
+  margin:20px 0;
+  padding:15px;
+  text-align:center;
+  border-radius:12px;
+  background:#f0fdf4;
+  border:1px dashed var(--nn-green);
+  font-weight:800;
+  color:var(--nn-green);
+  font-size:1.1rem;
+}
+
+/* FOOTER */
+
+footer{
+  text-align:center;
+  padding:40px 20px;
+  color:#777;
+  font-size:0.9rem;
+}
+
+footer a{
+  color:var(--nn-green);
+  text-decoration:none;
+  font-weight:bold;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+  .modal{
+    padding:20px;
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { background: var(--nn-bg); color: var(--text-dark); font-family: 'DM Sans', sans-serif; padding-top: 80px; }
+}
 
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: center;
-    padding: 10px; background: var(--nn-white);
-    border-bottom: 3px solid var(--nn-green);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  }
-  .logo-img { height: 60px; width: auto; }
-
-  .hero {
-    padding: 40px 20px; text-align: center;
-    background: linear-gradient(rgba(26, 94, 32, 0.85), rgba(26, 94, 32, 0.85)), url('https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?q=80&w=1000');
-    background-size: cover; background-position: center; color: white;
-  }
-
-  .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
-  .trips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-  
-  .trip-card {
-    background: white; border-radius: 15px; padding: 20px;
-    border-top: 6px solid var(--nn-green);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-    text-align: center; position: relative;
-  }
-  .date-badge {
-    background: var(--nn-green); color: white;
-    padding: 5px 15px; border-radius: 20px;
-    font-size: 0.85rem; font-weight: bold;
-    display: inline-block; margin-bottom: 10px;
-  }
-  .trip-title { color: var(--nn-green); font-weight: 800; font-size: 1.2rem; margin-bottom: 5px; }
-  .trip-price { font-size: 1.4rem; font-weight: 700; margin: 10px 0; color: #333; }
-
-  .btn-reserver {
-    width: 100%; background: var(--nn-green); color: white; border: none;
-    padding: 12px; border-radius: 10px; font-weight: 700; cursor: pointer;
-    transition: 0.3s;
-  }
-  .btn-reserver:hover { background: var(--nn-green-light); transform: scale(1.02); }
-
-  /* MODAL */
-  .modal-overlay {
-    position: fixed; inset: 0; background: rgba(0,0,0,0.8);
-    display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px;
-  }
-  .modal-overlay.active { display: flex; }
-  .modal { 
-    background: white; padding: 25px; border-radius: 20px; 
-    width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto;
-  }
-  
-  label { display: block; margin-top: 15px; font-weight: 700; font-size: 0.85rem; color: var(--nn-green); }
-  input, select {
-    width: 100%; padding: 12px; margin-top: 5px;
-    border: 1.5px solid #eee; border-radius: 10px; outline: none;
-  }
-
-  .total-box {
-    background: #f0fdf4; border: 1px dashed var(--nn-green); padding: 15px; 
-    border-radius: 12px; text-align: center; font-weight: 800; 
-    color: var(--nn-green); margin: 20px 0; font-size: 1.1rem;
-  }
-
-  footer { text-align: center; padding: 40px; color: #888; font-size: 0.85rem; }
 </style>
 </head>
 <body>
 
+<!-- NAVBAR -->
+
 <nav>
-  <img src="logo.jpg" alt="Logo Niaye-Niaye Transport" class="logo-img">
+  <img src="logo.jpg" alt="Logo" class="logo-img">
 </nav>
 
-<div class="hero">
-  <h1>Spécial Retour Tabaski</h1>
-  <p>Réservez votre trajet depuis Saint-Louis vers Mboro ou Dakar</p>
-</div>
+<!-- HERO -->
+
+<section class="hero">
+  <h1>Retour vers l'UGB</h1>
+  <p>Réservez votre trajet vers Saint-Louis</p>
+</section>
+
+<!-- TRAJETS -->
 
 <div class="container">
   <div class="trips-grid" id="tripsGrid"></div>
 </div>
 
+<!-- MODAL -->
+
 <div class="modal-overlay" id="modalOverlay">
+
   <div class="modal">
-    <h2 id="modalTitle" style="color:var(--nn-green); text-align:center;">Réserver mon siège</h2>
-    
+
+    <h2 id="modalTitle" style="text-align:center;color:var(--nn-green);margin-bottom:10px;">
+      Réserver mon siège
+    </h2>
+
     <label>Prénom et Nom</label>
-    <input type="text" id="fname" placeholder="Ex: Moussa Ndiaye">
-    
+    <input type="text" id="fname" placeholder="Ex : Moussa Ndiaye">
+
     <label>Téléphone</label>
     <input type="tel" id="fphone" placeholder="7x xxx xx xx">
 
-    <div id="dateSelectionBlock">
-      <label>📅 Choisissez votre date de départ</label>
-      <select id="fdate">
-        <option value="21 Mai 2026">21 Mai 2026</option>
-        <option value="22 Mai 2026">22 Mai 2026</option>
-        <option value="23 Mai 2026">23 Mai 2026</option>
-        <option value="24 Mai 2026">24 Mai 2026</option>
-        <option value="25 Mai 2026">25 Mai 2026</option>
-      </select>
-    </div>
+    <label>📅 Date de départ</label>
+    <select id="fdate">
+      <option value="30 Mai 2026">30 Mai 2026</option>
+      <option value="31 Mai 2026">31 Mai 2026</option>
+      <option value="1 Juin 2026">1 Juin 2026</option>
+    </select>
 
-    <label>📍 Point de ramassage</label>
+    <label>📍 Point de départ</label>
     <select id="fpoint"></select>
 
-    <div style="display: flex; gap: 10px;">
-        <div style="flex: 1;">
-            <label>Places</label>
-            <select id="fplaces" onchange="updateTotal()">
-                <option value="1">1 place</option>
-                <option value="2">2 places</option>
-                <option value="3">3 places</option>
-            </select>
-        </div>
-        <div style="flex: 1;">
-            <label>Paiement</label>
-            <select id="fpay">
-                <option value="Wave">Wave</option>
-                <option value="Orange Money">Orange Money</option>
-            </select>
-        </div>
+    <div style="display:flex;gap:10px;">
+
+      <div style="flex:1;">
+        <label>Places</label>
+        <select id="fplaces" onchange="updateTotal()">
+          <option value="1">1 place</option>
+          <option value="2">2 places</option>
+          <option value="3">3 places</option>
+        </select>
+      </div>
+
+      <div style="flex:1;">
+        <label>Paiement</label>
+        <select id="fpay">
+          <option value="Wave">Wave</option>
+          <option value="Orange Money">Orange Money</option>
+        </select>
+      </div>
+
     </div>
 
-    <div class="total-box" id="totalAmount">Total : 0 FCFA</div>
-    
-    <button class="btn-reserver" onclick="sendToWhatsApp()">✅ Confirmer sur WhatsApp</button>
-    <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#999; margin-top:15px; cursor:pointer;">Annuler</button>
+    <div class="total-box" id="totalAmount">
+      Total : 0 FCFA
+    </div>
+
+    <button class="btn-reserver" onclick="sendToWhatsApp()">
+      ✅ Confirmer sur WhatsApp
+    </button>
+
+    <button onclick="closeModal()"
+      style="width:100%;margin-top:15px;background:none;border:none;color:#888;cursor:pointer;">
+      Annuler
+    </button>
+
   </div>
+
 </div>
+
+<!-- FOOTER -->
 
 <footer>
   <p><b>Niaye-Niaye Transport</b></p>
   <p>70 482 93 55 / 78 425 98 58</p>
+  <br>
+  <a href="tel:+221704829355">📞 Appeler maintenant</a>
 </footer>
 
 <script>
-// Points de départ (Sans les heures pour Mboro, avec heures pour Dakar)
-const pointsMboro = [
-  "UGB - Village P", "UGB - Village M", "UGB - Village Q", "UGB - Village O", 
-  "UGB - Village N", "UGB - Village K", "UGB - Village I", "UGB - Village H", 
-  "UGB - Village L", "UGB - Village J", "Porte Ceamitic", "Station Elton Boudiouck", 
-  "Ngallelle", "Croisement Bango", "Rond Point khor (Station Petrosen)", "Station Shell (Gare routière)"
+
+/* =========================
+POINTS DE DÉPART
+========================= */
+
+// DAKAR SOIR
+
+const pointsDakarSoir = [
+
+"13h00 : Bountou Pikine - Station TOTAL",
+"13h10 : Fass Mbao - Arrêt ICS",
+"13h20 : Keur Mbaye Fall (Djouma Dji)",
+"13h40 : EDK Rufisque (Sococim)",
+"14h00 : Bargny - EDK",
+"14h15 : Diamniadio",
+"14h35 : Sébikhotane (Niari Poto)",
+"15h00 : Pout (Ciel Oil)",
+"15h15 : Mairie Thiès",
+"15h40 : EDK Tivaouane",
+"16h00 : Ngaye Station Star"
+
 ];
 
-const pointsDakarUGB = [
-  "04:15 : UGB- Village P", "04:30 : UGB- Village M", "04:30 : UGB- Village Q",
-  "04:40 : UGB- Village O", "04:40 : UGB- Village N", "04:45 : UGB- Village K/I/H/L/J",
-  "04:55 : Porte Ceamitic", "05:00 : Station Elton Boudiouck", "05:00 : Ngallelle",
-  "05:00 : Croisement Bango", "05:00 : Rond Point khor (Petrosen)", "05:10 : Station Shell (Gare routière)"
+// DAKAR MATIN
+
+const pointsDakarMatin = [
+
+"05h00 : Dakar - Ecole Normale",
+"05h40 : Bountou Pikine - Station TOTAL",
+"06h10 : Fass Mbao - Arrêt ICS",
+"06h20 : Keur Mbaye Fall (Djouma Dji)",
+"06h40 : EDK Rufisque - En face Sococim",
+"07h00 : Bargny - EDK",
+"07h10 : Diamniadio - Hôpital des enfants",
+"07h20 : Sébikhotane - Niari Poto",
+"07h30 : Km50 - Station Clean Oil",
+"07h40 : Pout - Ciel Oil",
+"08h00 : Mairie de Thiès",
+"08h20 : EDK Tivaouane",
+"08h35 : Pire",
+"08h50 : Ngaye Mbékhé"
+
 ];
+
+// MBORO
+
+const pointsMboroSL = [
+
+"07h00 : Ngaye Ngaye",
+"Garage routier (Keur Pape Moussa Diop)",
+"Mosquée HLM",
+"Station Total",
+"Arrêt Diamagueune",
+"Lycée de Mboro",
+"Croisement",
+"Carrefour Darou"
+
+];
+
+/* =========================
+TRAJETS
+========================= */
 
 const trajets = [
-  // Trajet MBORO (Une seule carte avec sélection de date dans le formulaire)
-  { 
-    id: 'mboro', 
-    from: "Saint-Louis", to: "Mboro", 
-    date: "21 au 25 Mai", 
-    heure: "Date au choix dans le formulaire", 
-    prix: 5000,
-    points: pointsMboro,
-    type: "choix-date"
-  },
-  // Génération des trajets DAKAR (Cartes séparées par jour)
-  ...[19, 20, 21, 22, 23, 24, 25].map(j => ({
-    id: `dakar-${j}`,
-    from: "Saint-Louis", to: "Dakar",
-    date: `${j} Mai 2026`,
-    heure: "Départ matinal (04:15)",
-    prix: 3500,
-    points: pointsDakarUGB,
-    type: "date-fixe"
-  }))
+
+{
+  id:'mboro-sl',
+  from:'Mboro',
+  to:'Saint-Louis',
+  date:'30 Mai au 2 Juin (mini bus)',
+  heure:'Départ 07h00',
+  prix:5000,
+  points:pointsMboroSL
+},
+{
+  id:'mboro-s2',
+  from:'Mboro',
+  to:'Saint-Louis',
+  date:'31 Mai (BUS 4000f)',
+  heure:'Départ 07h00 Station total',
+  prix:4000,
+  points:pointsMboroSL
+},
+
+{
+  id:'dakar-sl-matin',
+  from:'Dakar',
+  to:'Saint-Louis',
+  date:'30 Mai au 2 Juin',
+  heure:'Départ Matin',
+  prix:3500,
+  points:pointsDakarMatin
+},
+
+{
+  id:'dakar-sl-soir',
+  from:'Dakar',
+  to:'Saint-Louis',
+  date:'30 Mai au 1 Juin',
+  heure:'Départ Soir',
+  prix:3500,
+  points:pointsDakarSoir
+}
+
 ];
 
 let selectedTrip = null;
 
+/* =========================
+AFFICHAGE CARTES
+========================= */
+
 const grid = document.getElementById('tripsGrid');
+
 grid.innerHTML = trajets.map(t => `
-  <div class="trip-card">
-    <div class="date-badge">${t.date}</div>
-    <div class="trip-title">${t.from} ➔ ${t.to}</div>
-    <p style="color:#666; font-size:0.85rem; margin-bottom:10px;">${t.heure}</p>
-    <div class="trip-price">${t.prix.toLocaleString()} FCFA</div>
-    <button class="btn-reserver" onclick="openModal('${t.id}')">Réserver</button>
+
+<div class="trip-card">
+
+  <div class="date-badge">${t.date}</div>
+
+  <div class="trip-title">
+    ${t.from} ➜ ${t.to}
   </div>
+
+  <p style="color:#666;font-size:0.9rem;">
+    ${t.heure}
+  </p>
+
+  <div class="trip-price">
+    ${t.prix.toLocaleString()} FCFA
+  </div>
+
+  <button class="btn-reserver" onclick="openModal('${t.id}')">
+    Réserver
+  </button>
+
+</div>
+
 `).join('');
 
-function openModal(id) {
+/* =========================
+OUVRIR MODAL
+========================= */
+
+function openModal(id){
+
   selectedTrip = trajets.find(t => t.id === id);
-  document.getElementById('modalTitle').innerText = selectedTrip.from + " ➔ " + selectedTrip.to;
-  
-  const dateBlock = document.getElementById('dateSelectionBlock');
-  if (selectedTrip.type === "choix-date") {
-    dateBlock.style.display = "block"; // Affiche le choix de la date pour Mboro
-  } else {
-    dateBlock.style.display = "none";  // Cache pour Dakar car la date est déjà sur la carte
-  }
-  
+
+  document.getElementById('modalTitle').innerText =
+  selectedTrip.from + " ➜ " + selectedTrip.to;
+
   const selectPoint = document.getElementById('fpoint');
-  selectPoint.innerHTML = selectedTrip.points.map(p => `<option value="${p}">${p}</option>`).join('');
-  
+
+  selectPoint.innerHTML = selectedTrip.points
+  .map(p => `<option value="${p}">${p}</option>`)
+  .join('');
+
   updateTotal();
-  document.getElementById('modalOverlay').classList.add('active');
+
+  document.getElementById('modalOverlay')
+  .classList.add('active');
+
 }
 
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('active');
+/* =========================
+FERMER MODAL
+========================= */
+
+function closeModal(){
+
+  document.getElementById('modalOverlay')
+  .classList.remove('active');
+
+  document.getElementById('fname').value = "";
+  document.getElementById('fphone').value = "";
+
 }
 
-function updateTotal() {
-  const p = document.getElementById('fplaces').value;
-  document.getElementById('totalAmount').innerText = "Total : " + (selectedTrip.prix * p).toLocaleString() + " FCFA";
+/* =========================
+FERMER SI CLIC DEHORS
+========================= */
+
+document.getElementById('modalOverlay')
+.addEventListener('click', function(e){
+
+  if(e.target === this){
+    closeModal();
+  }
+
+});
+
+/* =========================
+TOTAL
+========================= */
+
+function updateTotal(){
+
+  const places =
+  document.getElementById('fplaces').value;
+
+  document.getElementById('totalAmount')
+  .innerText =
+  "Total : " +
+  (selectedTrip.prix * places).toLocaleString()
+  + " FCFA";
+
 }
 
-function sendToWhatsApp() {
-  const nom = document.getElementById('fname').value;
-  const tel = document.getElementById('fphone').value;
-  const point = document.getElementById('fpoint').value;
-  const places = document.getElementById('fplaces').value;
-  const pay = document.getElementById('fpay').value;
-  
-  // Déterminer la date choisie ou fixe
-  const dateVoyage = selectedTrip.type === "choix-date" ? document.getElementById('fdate').value : selectedTrip.date;
+/* =========================
+WHATSAPP
+========================= */
 
-  if(!nom || !tel) return alert("Veuillez remplir votre nom et téléphone.");
+function sendToWhatsApp(){
 
-  const numWhatsApp = "221774600290"; 
-  const message = `*RÉSERVATION NIAYE-NIAYE TRANSPORT*%0A` +
-                  `------------------------------%0A` +
-                  `👤 *Client :* ${nom}%0A` +
-                  `📞 *Tél :* ${tel}%0A` +
-                  `📅 *Date :* ${dateVoyage}%0A` +
-                  `📍 *Trajet :* ${selectedTrip.from} -> ${selectedTrip.to}%0A` +
-                  `🚏 *Ramassage :* ${point}%0A` +
-                  `💺 *Places :* ${places}%0A` +
-                  `💳 *Paiement :* ${pay}%0A` +
-                  `💰 *Total :* ${(selectedTrip.prix * places)} FCFA`;
+  const nom =
+  document.getElementById('fname')
+  .value.trim();
 
-  window.open(`https://wa.me/${numWhatsApp}?text=${message}`, '_blank');
+  const tel =
+  document.getElementById('fphone')
+  .value.trim();
+
+  const date =
+  document.getElementById('fdate')
+  .value;
+
+  const point =
+  document.getElementById('fpoint')
+  .value;
+
+  const places =
+  document.getElementById('fplaces')
+  .value;
+
+  const pay =
+  document.getElementById('fpay')
+  .value;
+
+  const regexTel =
+  /^(70|75|76|77|78)[0-9]{7}$/;
+
+  if(!nom || !tel){
+
+    return alert(
+      "Veuillez remplir votre nom et téléphone."
+    );
+
+  }
+
+  if(!regexTel.test(tel.replace(/\s/g,''))){
+
+    return alert("Numéro invalide.");
+
+  }
+
+  const total =
+  selectedTrip.prix * places;
+
+  const numWhatsApp = "221764600290";
+
+  const message =
+`*RÉSERVATION NIAYE-NIAYE TRANSPORT*%0A
+------------------------------%0A
+👤 *Client :* ${nom}%0A
+📞 *Téléphone :* ${tel}%0A
+📅 *Date :* ${date}%0A
+📍 *Trajet :* ${selectedTrip.from} ➜ ${selectedTrip.to}%0A
+🚏 *Point :* ${point}%0A
+💺 *Places :* ${places}%0A
+💳 *Paiement :* ${pay}%0A
+💰 *Total :* ${total} FCFA`;
+
+  window.open(
+    `https://wa.me/${numWhatsApp}?text=${message}`,
+    '_blank'
+  );
+
 }
+
 </script>
+
 </body>
 </html>
